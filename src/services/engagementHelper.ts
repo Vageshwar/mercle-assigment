@@ -14,7 +14,14 @@ export class EngagementHelper extends ChartHelper {
     engagementMessageOverTimeChartOptions(messages:Messages, channels:{name: string, id: string}[]): CHART_OPTIONS{
         if(messages?.length && channels?.length){
             this.default_chart_options.series = this.#prepareSeries(messages, channels);
-            this.default_chart_options.title = {text : 'Engagement Messages'};
+            this.default_chart_options.title = {text : 'Engagement Messages Timeline'};
+            this.default_chart_options.tooltip = {
+                xDateFormat: '%d %b',
+                headerFormat: '<b>{series.name}</b></br>',
+                pointFormat: `{point.y} message(s) on {point.x:%d %b}`,
+               
+                
+            }
             return this.default_chart_options;
         }
         return this.default_chart_options;
@@ -57,7 +64,7 @@ export class EngagementHelper extends ChartHelper {
      */
     #getSeriesForMultipleMessages(messages: Messages, channel_name_map: Map<string, string> ) : series_type{
         const channel_message_map : Dictionary<Messages> = groupBy(messages, (item)=> item.channelId);
-        const series_map : Map<string, (number | string)[][]> = new Map<string, (number | string)[][]>();
+        const series_map : Map<string, {x: string|number , y: number}[]> = new Map<string, {x: string|number , y: number}[]>();
         Object.keys(channel_message_map).forEach( (key : string) => {
             const message = channel_message_map[key];
             if(message.length > 1){
@@ -66,16 +73,16 @@ export class EngagementHelper extends ChartHelper {
                     if(channel_name){
                         const series_data = series_map.get(channel_name);
                         if(series_data){
-                            series_data.push([ moment.parseZone(msg?.timeBucket).format('DD MM YYY') ,toNumber(msg.count)]);
+                            series_data.push({x: moment(msg?.timeBucket).unix() ,y: toNumber(msg.count)});
                         }else{
-                            series_map.set(channel_name, [[moment.parseZone(msg?.timeBucket).format('DD MM YYY'), toNumber(msg.count)]]);
+                            series_map.set(channel_name, [{x :moment(msg?.timeBucket).unix(), y: toNumber(msg.count)}]);
                         }
                     }
                 })
             }
         })
         const series : series_type = [];
-        series_map.forEach((value: (number | string)[][], key: string) => {
+        series_map.forEach((value: {x: string | number, y: number}[], key: string) => {
             series.push({name: key, data: value});
         });
         return series;

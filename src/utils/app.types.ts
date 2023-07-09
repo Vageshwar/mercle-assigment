@@ -11,5 +11,5 @@ export type Messages = {
 
 export type series_type = {
     name?: string,
-    data?: (number | string)[][]
+    data?: {x: string | number, y: number}[]
 }[]

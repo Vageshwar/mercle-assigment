@@ -1,5 +1,7 @@
 import { series_type } from "./app.types";
 
+type callbackFunction = () => string;
+
 export type CHART_OPTIONS = {
     chart: {
         type: string,
@@ -20,6 +22,11 @@ export type CHART_OPTIONS = {
             enabled?: boolean,
         },
         categories?: string[] | null | undefined,
+        dateTimeLabelFormats?: {
+            day?: {
+              main: string,
+            }
+          },
         
     },
     yAxis?: {
@@ -33,6 +40,8 @@ export type CHART_OPTIONS = {
     tooltip?: {
         headerFormat?: string,
         pointFormat?: string,
+        formatter?: callbackFunction,
+        xDateFormat?: string,
     },
     plotOptions: {
         spline?: {
@@ -60,6 +69,13 @@ export const SPLINE_DEFAULT = {
             text: 'Date',
             enabled: true,
         },
+        categories: null,
+        type: 'datetime',
+        dateTimeLabelFormats: {
+            day: {
+              main: '%d. %b'
+            }
+          },
         
     },
     yAxis: {

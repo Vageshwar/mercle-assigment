@@ -3,6 +3,9 @@ import HighchartsReact from "highcharts-react-official";
 import { useEffect, useState } from "react";
 import { EngagementHelper } from "../services/engagementHelper";
 import { CHART_TYPES, channels, messages } from "../utils/validations.constants";
+import DarkUnica from 'highcharts/themes/dark-unica';
+
+DarkUnica(Highcharts);
 
 function SplineChart() {
     const [chart_options, setChartOptions] = useState({});
