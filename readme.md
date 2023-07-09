@@ -3,7 +3,7 @@
 
 **Sample screenshot**
 
-![alt text](.\public\merce-assignment.png)
+![sample-screenshot](/public/merce-assignment.png)
 
 ### To Run
 - clone repo
