@@ -13,4 +13,4 @@
 ### Tech used
 - Vite: for project setup
 - React in Typescript
-- Highcharts for rendering
+- Highcharts for rendering chart
