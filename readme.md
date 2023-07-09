@@ -1,4 +1,4 @@
-## Mercel Assignment : Highcharts
+## Mercle Assignment : Highcharts
 
 
 **Sample screenshot**
